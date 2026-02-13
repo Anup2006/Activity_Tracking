@@ -9,8 +9,21 @@ app.use(cors({
     credentials:true
 }));
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: " Application is running 🚀"
+  });
+});
+
 app.use(express.json({limit:"16kb"}))
 app.use(express.urlencoded())
+app.use(express.static("public"))
 app.use(cookieParser())
+
+//router import 
+import userRouter from "./routes/user.routes.js"   
+
+app.use("/api/v1/users",userRouter);
 
 export {app}
