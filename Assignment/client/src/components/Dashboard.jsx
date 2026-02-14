@@ -15,7 +15,7 @@ const navItems = [
 export default function Dashboard({ children }) {
   const location = useLocation();
 
-  const {token } = useSelector((state) => state.auth);
+  const {user,token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -86,25 +86,32 @@ export default function Dashboard({ children }) {
         <div className="p-4 border-t border-gray-100">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white">
-              {/* {user?.name?.charAt(0)?.toUpperCase()} */}
+              {user?.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt={user?.fullname?.charAt(0).toUpperCase() || "U"}
+                  className="rounded-full w-12 h-12"
+                />
+              ) : (
+                <span>{user?.fullname?.charAt(0).toUpperCase() || "U"}</span>
+              )}
             </div>
             <div className="flex-1 min-w-0">
-              {/* <p className="truncate">{user?.name}</p> */}
-              {/* <p className="text-sm text-gray-500 truncate">{user?.email}</p> */}
+              <p className="truncate">{user?.fullname}</p>
+              <p className="text-sm text-gray-500 truncate">{user?.email}</p>
             </div>
           </div>
 
           <motion.button
             whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            // onClick={logout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl transition-all"
+            whileTap={{ scale: 0.98 }}        
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-gray-500 rounded-xl transition-all"
           >
-            <LogOut className="w-4 h-4" />
             <button
               onClick={handleLogout}
-              className="block py-3 px-5 w-full text-left rounded-lg hover:bg-gray-700"
+              className="block py-3 px-5 w-full flex flex-row gap-2 text-left rounded-lg "
             >
+              <LogOut className="w-4 h-4 mt-1" />
               Logout
             </button>
           </motion.button>

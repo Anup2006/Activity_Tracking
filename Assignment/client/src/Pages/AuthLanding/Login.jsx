@@ -5,6 +5,7 @@ import { LogIn } from "lucide-react";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from '../../redux/authSlice.js';
+import GoogleButton from "./GoogleButton.jsx";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -66,8 +67,10 @@ export default function Login() {
             <p className="text-gray-500">Sign in to continue your journey</p>
           </div>
 
+          <GoogleButton isSignup={false} />
+
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
 
             {/* Email */}
             <div className="relative">
@@ -78,7 +81,7 @@ export default function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => setFocusedField("email")}
                 onBlur={() => setFocusedField(null)}
-                className="w-full px-4 pt-6 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full px-4 pt-4 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 placeholder=" "
               />
               <label
@@ -111,7 +114,7 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={() => setFocusedField("password")}
                 onBlur={() => setFocusedField(null)}
-                className="w-full px-4 pt-6 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full px-4 pt-4 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 placeholder=" "
               />
               <label

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser,setOtpEmail,verifyOtpUser,resendOtpUser } from "../../redux/authSlice.js";
 import OtpForm from "./OtpForm.jsx";
+import GoogleButton from "./GoogleButton.jsx";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -95,16 +96,24 @@ export default function Signup() {
       >
         <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-4">
-              <UserPlus className="w-8 h-8 text-white" />
+          <div className="text-center mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 mb-2">
+              <UserPlus className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl text-black mb-2">Create Account</h1>
+            <h1 className="font-medium text-lg text-black mb-2">Create Account</h1>
             <p className="text-gray-500">Start your journey today</p>
           </div>
 
+          <GoogleButton isSignup={true} />
+
+          <div className="flex items-center my-4">
+            <hr className="flex-1 border-gray-300" />
+            <span className="mx-3 text-gray-500 text-sm">or</span>
+            <hr className="flex-1 border-gray-300" />
+          </div>
+
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div className="relative">
               <input
@@ -114,7 +123,7 @@ export default function Signup() {
                 onChange={(e) => setName(e.target.value)}
                 onFocus={() => setFocusedField("name")}
                 onBlur={() => setFocusedField(null)}
-                className="w-full px-4 pt-6 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full px-4 pt-4 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 placeholder=" "
               />
               <label
@@ -137,7 +146,7 @@ export default function Signup() {
                 onChange={(e) => setEmail(e.target.value)}
                 onFocus={() => setFocusedField("email")}
                 onBlur={() => setFocusedField(null)}
-                className="w-full px-4 pt-6 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full px-4 pt-4 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 placeholder=" "
               />
               <label
@@ -160,7 +169,7 @@ export default function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
                 onFocus={() => setFocusedField("password")}
                 onBlur={() => setFocusedField(null)}
-                className="w-full px-4 pt-6 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                className="w-full px-4 pt-4 pb-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                 placeholder=" "
               />
               <label

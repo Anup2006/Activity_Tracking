@@ -16,17 +16,30 @@ import {
 } from "react-router-dom";
 
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import App from "./App.jsx";
 import Login from "./Pages/AuthLanding/Login.jsx"; 
 import Signup from "./Pages/AuthLanding/Signup.jsx";
 import ForgetPassword from "./Pages/AuthLanding/ForgetPassword.jsx";
 
+const GoogleAuthWrapper=({ children }) => {
+  return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      {children}
+    </GoogleOAuthProvider>
+  )
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       {/* Public Routes */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<GoogleAuthWrapper>
+        <Login />
+      </GoogleAuthWrapper>} />
+      <Route path="/signup" element={<GoogleAuthWrapper>
+        <Signup />
+      </GoogleAuthWrapper>} />
       <Route path="/auth/forgetPassword" element={<ForgetPassword/>}/>
 
       {/* Redirect root to login */}
