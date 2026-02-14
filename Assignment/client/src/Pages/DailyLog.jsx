@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchActivities, addActivity, deleteActivity } from '../redux/activitySlice.js';
 import ActivityCard from '../components/ActivityCard.jsx';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 export default function DailyLog() {
   const dispatch = useDispatch();

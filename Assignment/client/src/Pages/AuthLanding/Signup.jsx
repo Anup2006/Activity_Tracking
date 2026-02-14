@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserPlus } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { signupUser,setOtpEmail,verifyOtpUser,resendOtpUser } from "../../redux/authSlice.js";
+import { signupUser,setOtpEmail,verifyOtpUser,resendOtpUser,clearOtpState } from "../../redux/authSlice.js";
 import OtpForm from "./OtpForm.jsx";
 import GoogleButton from "./GoogleButton.jsx";
 
@@ -21,12 +21,6 @@ export default function Signup() {
   const { loading, error, token,otpUserId, resending,otpEmail } = useSelector((state) => state.auth);
   const [otp, setOtp] = useState("");
 
-  useEffect(() => {
-    if (otpUserId) {
-      toast.success("Account created! Please verify OTP.");
-    }
-  }, [otpUserId, navigate]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({ name: "", email: "", password: "" });
@@ -36,8 +30,32 @@ export default function Signup() {
     if (!password || password.length < 6)
       return setErrors((prev) => ({ ...prev, password: "Password must be at least 6 characters" }));
 
-    dispatch(signupUser({ email, fullname: name, password }));
-    dispatch(setOtpEmail(email));
+    dispatch(signupUser({ email, fullname: name, password }))
+    .unwrap()
+    .then(() => {
+      toast.success("Account created! Please verify OTP.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      toast.success("OTP sent to your email. Please check your inbox (and Spam folder if you don't see it).", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      dispatch(setOtpEmail(email));
+    })
+    .catch((err) => {
+      toast.error(err?.message || "Signup failed, Account already created");
+    });
   };
 
   const handleVerifyOtp= ()=>{

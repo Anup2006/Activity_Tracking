@@ -4,7 +4,7 @@ import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHistory, deleteActivity } from "../redux/activitySlice";
 import ActivityCard from "../components/ActivityCard.jsx";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 
 export default function History() {
   const dispatch = useDispatch();

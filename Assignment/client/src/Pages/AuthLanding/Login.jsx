@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LogIn } from "lucide-react";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from '../../redux/authSlice.js';
 import GoogleButton from "./GoogleButton.jsx";
@@ -18,19 +18,6 @@ export default function Login() {
 
   const { token, loading, error } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    if (token) {
-      toast.success("Welcome back!");
-      navigate("/app");
-    }
-  }, [token, navigate]);
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({ email: "", password: "" });
@@ -45,7 +32,23 @@ export default function Login() {
       return;
     }
 
-    dispatch(loginUser({ email, password }));
+    dispatch(loginUser({ email, password }))
+    .unwrap()
+    .then(() => {
+      toast.success("Welcome back!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      navigate("/app");
+    })
+    .catch((err) => {
+      toast.error(err?.message || "Login failed");
+    });
   };
 
   return (
